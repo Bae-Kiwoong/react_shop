@@ -1,12 +1,15 @@
 
 import { useEffect, useState } from "react";
+import { Nav } from "react-bootstrap";
 import { useParams } from "react-router-dom"
+import TabContent from "../components/Tabcontent";
 
 function Detail({ fruit }) {
   const { id } = useParams();
   const [num , setNum] = useState(0);
   const [num2 , setNum2] = useState(0);
   const [alert,setAlert] = useState(true);
+  const [tabNumber, setTabNumber] = useState(0);
 
   const selectedFruit = fruit[id];
 
@@ -14,7 +17,7 @@ function Detail({ fruit }) {
   useEffect(()=>{
     //여기에 작성된 모든 코드들은 마운트,업데이트 될 때 실행
    let timer = setTimeout(()=>{
-    console.log(`setTimeout 종료`);
+    
     
     setAlert(false);
    },5000)
@@ -27,7 +30,7 @@ function Detail({ fruit }) {
   }, [])
 
   useEffect(()=>{
-    console.log(`useEffect 확인용`);
+    
     
   },[num])
   //의존성 배열이 없으면 마운트,업데이트마다 실행
@@ -66,6 +69,29 @@ function Detail({ fruit }) {
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
+
+      <Nav className="mt-5" variant="tabs" justify defaultActiveKey="link-0">
+        <Nav.Item>
+          <Nav.Link eventKey="link-0" onClick={()=>{
+            setTabNumber(0);
+          }}>상세정보</Nav.Link>
+        </Nav.Item>
+    
+        <Nav.Item>
+          <Nav.Link eventKey="link-1" onClick={()=>{
+            setTabNumber(1);
+          }}>리뷰</Nav.Link>
+        </Nav.Item>
+     
+        <Nav.Item>
+          <Nav.Link eventKey="link-2" onClick={()=>{
+            setTabNumber(2);
+          }}>반품,교환정보</Nav.Link>
+        </Nav.Item>
+      </Nav>
+
+      <TabContent tabNumber={tabNumber}/>
+
     </div>
   )
 }
