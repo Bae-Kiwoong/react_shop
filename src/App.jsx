@@ -10,6 +10,7 @@ import About from './pages/About'
 import styled from 'styled-components'
 import axios  from 'axios'
 import Cart from './pages/Cart'
+import WatchedProduct from './components/WatchedProduct'
 
 // styled-component 기본 사용법 - 터미널에서 npm install styled-compinents 
 // 다른 컴포넌트에 영향을 주지 않음. 구조가 복잡할때 사용하면 편함. 단순할때는 굳이..
@@ -36,6 +37,7 @@ import Cart from './pages/Cart'
 // `
 
 const App = () => {
+
 const [fruit, setFruit] = useState([]);
 
 
@@ -52,6 +54,11 @@ useEffect(()=>{
           
         })
 },[])
+useEffect(()=>{
+
+  localStorage.setItem('watched', JSON.stringify([]));
+
+},[])
 
 return (
   <div className={style.container}>
@@ -60,6 +67,7 @@ return (
     <Btn bg='pink'>버튼</Btn>
     <Btn2 bg='green'>버튼</Btn2>
     </Div> */}
+    <WatchedProduct fruit={fruit} />
     <Header />
 
    

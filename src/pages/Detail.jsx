@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom"
 import TabContent from "../components/Tabcontent";
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/store";
+import { setWatched } from "../redux/watchedSlice";
 
 function Detail({ fruit }) {
   const { id } = useParams();
@@ -40,6 +41,30 @@ function Detail({ fruit }) {
   //의존성 배열이 빈배열이면 마운트시 한번만 실행
   //의존성 배열에 특정 state,props가 있으면 마운트 될때와 해당 state,props가 업데이트 시 실행
   
+  useEffect(()=>{
+//방금 들어온 상품의 id를 로컬스토리지에 추가
+    let watched = localStorage.getItem('watched');
+    watched = JSON.parse(watched);
+//이미 최근 본 상품이 3개일때 새로운걸 추가해야 하므로 기존거 하나 지우고 추가
+//개수로만 삭제를 하니까 중복된걸 보게되면 문제가 생김
+//이미 들어있는거면 안지움. 없을때만 삭제
+    if(watched.length === 3 && !watched.includes(id))
+      watched.pop();//배열의 가장 마지막을 지움
+
+    watched = [id, ...watched]
+
+    watched = new Set(watched);
+    watched = Array.from(watched);
+ 
+    localStorage.setItem('watched', JSON.stringify(watched));
+    dispatch( setWatched(watched));
+
+  },[])
+
+    
+
+
+
   
   if( !selectedFruit){
 
