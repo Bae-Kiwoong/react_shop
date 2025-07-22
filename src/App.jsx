@@ -9,6 +9,7 @@ import Detail from './pages/Detail'
 import About from './pages/About'
 import styled from 'styled-components'
 import axios  from 'axios'
+import Cart from './pages/Cart'
 
 // styled-component 기본 사용법 - 터미널에서 npm install styled-compinents 
 // 다른 컴포넌트에 영향을 주지 않음. 구조가 복잡할때 사용하면 편함. 단순할때는 굳이..
@@ -68,6 +69,7 @@ return (
     <Route path='/' element={<MainPage fruit={fruit}/>} />
     <Route path='/test' element={<h1>테스트페이지</h1>}/>
     <Route path='/detail/:id' element={<Detail fruit={fruit} />} />
+    <Route path='/cart' element={<Cart />} />
     {/* 하위 라우터 생성 방법 */}
     <Route path='/about' element={<About />} >
     <Route path='intro' element={<div>회사소개</div>} />
