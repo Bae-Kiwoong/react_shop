@@ -1,41 +1,54 @@
 import { Table } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCount, changeAge, changeNum, nPlusNum, plusNum, removeItem } from '../redux/store';
 
 
 const Cart = () => {
-  const test = useSelector((state)=>{
-    return state.test
-  })
+  const cart = useSelector(state => state.cart);
 
+  const dispatch = useDispatch();//변경 함수를 사용할수 있게 해주는 함수
   
-  const item = useSelector(state => state.item)
-  
-  console.log(test);
-  console.log(item);
-  console.log(item[1]);
-  
+
+
+
   
   
 
   return (
   <Table>
-    <thead>
-      <tr>
+   <thead>     
+     <tr>
         <th>번호</th>
         <th>상품명</th>
         <th>수량</th>
         <th>수정</th>
+        <th>삭제</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>apple</td>
-        <td>10</td>
-        <td>수정하기</td>
-      </tr>
+      {
+        cart.map((cart, i)=>{
+          return (
+          <tr key={i}>
+            <td>{cart.id}</td>
+            <td>{cart.title}</td>
+            <td>{cart.count}</td>
+            <td><button onClick={()=>{
+              dispatch(addCount(i));
+            }}>+</button></td>
+            <td><button onClick={()=>{
+              dispatch(removeItem(i));
+            }}>X</button></td>
+          </tr>
+          )
+        })
+      }
+            
+
+
     </tbody>
   </Table>
+
   
   );
 };
